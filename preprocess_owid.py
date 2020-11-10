@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('Project/raw_data/owid-covid-data.csv')
+df = pd.read_csv('data/owid-covid-data.csv')
 
 df = df.drop(columns=['continent'])
 
@@ -30,4 +30,10 @@ def fill_owid_data(col_name):
     for index, row in df.iterrows():
         this.loc[row['iso_code'], row['date']] = row[col_name]
     return this
-    
+
+def generate_owid_csv(col_name, filename):
+    this = fill_owid_data(col_name)
+    this.to_csv("data/" + filename + ".csv")
+
+
+generate_owid_csv("new_deaths", "new_deaths")

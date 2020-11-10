@@ -35,5 +35,3 @@ def generate_owid_csv(col_name, filename):
     this = fill_owid_data(col_name)
     this.to_csv("data/" + filename + ".csv")
 
-
-generate_owid_csv("new_deaths", "new_deaths")

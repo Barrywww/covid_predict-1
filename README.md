@@ -2,7 +2,7 @@
 
 
 
-*   Preliminarily narrowed down the choices for datasets. (Apple Mobility Data, Oxford Government Response Tracker, Time Series of COVID-19 by DataHub, COVID data by OWID).
+*   Preliminarily narrowed down the choices for datasets. (the complete Our World in Data COVID-19 dataset, Apple Mobility Data, Oxford Government Response Tracker, Time Series of COVID-19 by DataHub).
     #### Update 12/1: We decided to drop Apple Mobility Data due to its sparsity compared to other datasets.
 *   Finished analyzing and preprocessing of Apple Mobility Data
     *   Fill in the null data with feasible data
@@ -12,7 +12,8 @@
     *   Feature selection (Stringency Index, Government Response Index, etc.)
     *   Aggregate by country/region
 *   We now have features:
-    *   <span style="text-decoration:underline;">Constant</span>
+    #### Constant
+    
       1. population
       2. population_density
       3. median_age
@@ -28,7 +29,9 @@
       13. hospital_beds_per_thousand
       14. life_expectancy
       15. Human_development_index
-    *   <span style="text-decoration:underline;">TimeSeries</span>
+      
+    #### Time Series
+    
       1. total_cases
       2. new_cases
       3. new_cases_smoothed

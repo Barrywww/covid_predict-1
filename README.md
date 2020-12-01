@@ -52,8 +52,7 @@
       18. new_tests_smoothed_per_thousand
       19. tests_per_case
       20. positive_rate
-      21. tests_units
-      22. Stringency_index
+      21. Stringency_index
 
 
 # Data Stylesheet

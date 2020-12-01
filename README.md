@@ -138,13 +138,8 @@ Index of democracy:
 
 [https://ourworldindata.org/democracy](https://ourworldindata.org/democracy)
 
-What regimes are all the country in 2016? The csv is in our folder: [https://drive.google.com/file/d/11IILbAYnCZ7fYcCaoxHvNv7stDxoa9FS/view?usp=sharing](https://drive.google.com/file/d/11IILbAYnCZ7fYcCaoxHvNv7stDxoa9FS/view?usp=sharing)
+What regimes are all the country in 2015? The csv is in our folder: (expired, need to be updated)
 
-Polity IV Individual Country Regime Trends, 1946-2013: [http://www.systemicpeace.org/polity/polity4.htm](http://www.systemicpeace.org/polity/polity4.htm)
-
-Polity Data Archive (Outdated?): 
-
-[http://www.ksgleditsch.com/polity.html](http://www.ksgleditsch.com/polity.html)
 
 Democracy Index (quite authoritative): 
 
@@ -169,9 +164,6 @@ Oxford COVID Gov Response Tracker Official:
 
 Government Stringency Index (in our folder): [https://drive.google.com/file/d/14_8riS1fCSDN54FFOP226rHaSNnflZl_/view?usp=sharing](https://drive.google.com/file/d/14_8riS1fCSDN54FFOP226rHaSNnflZl_/view?usp=sharing)
 
-Risk of Openness Github project:
-
-[https://github.com/OxCGRT/covid-policy-scratchpad/tree/master/risk_of_openness_index](https://github.com/OxCGRT/covid-policy-scratchpad/tree/master/risk_of_openness_index)
 
 The COVID19 Government Measures Dataset puts together all the measures implemented by governments worldwide in response to the Coronavirus pandemic. Data collection includes secondary data review. The researched information available falls into five categories:
 

@@ -2,7 +2,8 @@
 
 
 
-*   Preliminarily narrowed down the choices for datasets. (Apple Mobility Data, Oxford Government Response Tracker, Time Series of COVID-19 by DataHub).
+*   Preliminarily narrowed down the choices for datasets. (Apple Mobility Data, Oxford Government Response Tracker, Time Series of COVID-19 by DataHub, COVID data by OWID).
+    #### Update 12/1: We decided to drop Apple Mobility Data due to its sparsity compared to other datasets.
 *   Finished analyzing and preprocessing of Apple Mobility Data
     *   Fill in the null data with feasible data
     *   Aggregated data by region/country and transportation type (transit, driving, walking)
@@ -46,10 +47,10 @@
       16. new_tests_per_thousand
       17. new_tests_smoothed
       18. new_tests_smoothed_per_thousand
-19. tests_per_case
-20. positive_rate
-21. tests_units
-22. Stringency_index
+      19. tests_per_case
+      20. positive_rate
+      21. tests_units
+      22. Stringency_index
 
 
 # Data Stylesheet

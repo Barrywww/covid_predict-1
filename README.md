@@ -12,40 +12,40 @@
     *   Aggregate by country/region
 *   We now have features:
     *   <span style="text-decoration:underline;">Constant</span>
-1. population
-2. population_density
-3. median_age
-4. aged_65_older
-5. aged_70_older
-6. gdp_per_capita
-7. extreme_poverty
-8. cardiovasc_death_rate
-9. diabetes_prevalence
-10. female_smokers
-11. male_smokers
-12. handwashing_facilities
-13. hospital_beds_per_thousand
-14. life_expectancy
-15. Human_development_index
+      1. population
+      2. population_density
+      3. median_age
+      4. aged_65_older
+      5. aged_70_older
+      6. gdp_per_capita
+      7. extreme_poverty
+      8. cardiovasc_death_rate
+      9. diabetes_prevalence
+      10. female_smokers
+      11. male_smokers
+      12. handwashing_facilities
+      13. hospital_beds_per_thousand
+      14. life_expectancy
+      15. Human_development_index
     *   <span style="text-decoration:underline;">TimeSeries</span>
-1. total_cases
-2. new_cases
-3. new_cases_smoothed
-4. total_deaths
-5. new_deaths
-6. new_deaths_smoothed
-7. total_cases_per_million
-8. new_cases_per_million
-9. new_cases_smoothed_per_million
-10. total_deaths_per_million
-11. new_deaths_per_million
-12. new_deaths_smoothed_per_million
-13. total_tests
-14. new_tests
-15. total_tests_per_thousand
-16. new_tests_per_thousand
-17. new_tests_smoothed
-18. new_tests_smoothed_per_thousand
+      1. total_cases
+      2. new_cases
+      3. new_cases_smoothed
+      4. total_deaths
+      5. new_deaths
+      6. new_deaths_smoothed
+      7. total_cases_per_million
+      8. new_cases_per_million
+      9. new_cases_smoothed_per_million
+      10. total_deaths_per_million
+      11. new_deaths_per_million
+      12. new_deaths_smoothed_per_million
+      13. total_tests
+      14. new_tests
+      15. total_tests_per_thousand
+      16. new_tests_per_thousand
+      17. new_tests_smoothed
+      18. new_tests_smoothed_per_thousand
 19. tests_per_case
 20. positive_rate
 21. tests_units

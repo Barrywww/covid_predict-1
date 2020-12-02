@@ -2,7 +2,7 @@
 
 
 
-*   Preliminarily narrowed down the choices for datasets. ([the complete Our World in Data COVID-19 dataset](https://github.com/owid/covid-19-data/tree/master/public/data), Apple Mobility Data, [Oxford Government Response Tracker](www.github.com/#), Datahua: Novel Corona Virus 2019).
+*   Preliminarily narrowed down the choices for datasets. ([the complete Our World in Data COVID-19 dataset](https://github.com/owid/covid-19-data/tree/master/public/data), Apple Mobility Data, [Oxford Government Response Tracker](www.github.com/#), Datahub: Novel Corona Virus 2019).
     #### Update 12/1: We decided to drop Apple Mobility Data due to its sparsity compared to other datasets. We also droped datahub because the comprehensiveness of the OWID datset.
 *   Finished analyzing and preprocessing of Apple Mobility Data
     *   Fill in the null data with feasible data

@@ -2,7 +2,8 @@
 
 
 
-*   Preliminarily narrowed down the choices for datasets. (Apple Mobility Data, Oxford Government Response Tracker, Time Series of COVID-19 by DataHub).
+*   Preliminarily narrowed down the choices for datasets. (the complete Our World in Data COVID-19 dataset, Apple Mobility Data, Oxford Government Response Tracker, Time Series of COVID-19 by DataHub).
+    #### Update 12/1: We decided to drop Apple Mobility Data due to its sparsity compared to other datasets.
 *   Finished analyzing and preprocessing of Apple Mobility Data
     *   Fill in the null data with feasible data
     *   Aggregated data by region/country and transportation type (transit, driving, walking)
@@ -11,45 +12,47 @@
     *   Feature selection (Stringency Index, Government Response Index, etc.)
     *   Aggregate by country/region
 *   We now have features:
-    *   <span style="text-decoration:underline;">Constant</span>
-1. population
-2. population_density
-3. median_age
-4. aged_65_older
-5. aged_70_older
-6. gdp_per_capita
-7. extreme_poverty
-8. cardiovasc_death_rate
-9. diabetes_prevalence
-10. female_smokers
-11. male_smokers
-12. handwashing_facilities
-13. hospital_beds_per_thousand
-14. life_expectancy
-15. Human_development_index
-    *   <span style="text-decoration:underline;">TimeSeries</span>
-1. total_cases
-2. new_cases
-3. new_cases_smoothed
-4. total_deaths
-5. new_deaths
-6. new_deaths_smoothed
-7. total_cases_per_million
-8. new_cases_per_million
-9. new_cases_smoothed_per_million
-10. total_deaths_per_million
-11. new_deaths_per_million
-12. new_deaths_smoothed_per_million
-13. total_tests
-14. new_tests
-15. total_tests_per_thousand
-16. new_tests_per_thousand
-17. new_tests_smoothed
-18. new_tests_smoothed_per_thousand
-19. tests_per_case
-20. positive_rate
-21. tests_units
-22. Stringency_index
+    #### Constant
+    
+      1. population
+      2. population_density
+      3. median_age
+      4. aged_65_older
+      5. aged_70_older
+      6. gdp_per_capita
+      7. extreme_poverty
+      8. cardiovasc_death_rate
+      9. diabetes_prevalence
+      10. female_smokers
+      11. male_smokers
+      12. handwashing_facilities
+      13. hospital_beds_per_thousand
+      14. life_expectancy
+      15. Human_development_index
+      
+    #### Time Series
+    
+      1. total_cases
+      2. new_cases
+      3. new_cases_smoothed
+      4. total_deaths
+      5. new_deaths
+      6. new_deaths_smoothed
+      7. total_cases_per_million
+      8. new_cases_per_million
+      9. new_cases_smoothed_per_million
+      10. total_deaths_per_million
+      11. new_deaths_per_million
+      12. new_deaths_smoothed_per_million
+      13. total_tests
+      14. new_tests
+      15. total_tests_per_thousand
+      16. new_tests_per_thousand
+      17. new_tests_smoothed
+      18. new_tests_smoothed_per_thousand
+      19. tests_per_case
+      20. positive_rate
+      21. Stringency_index
 
 
 # Data Stylesheet
@@ -135,13 +138,8 @@ Index of democracy:
 
 [https://ourworldindata.org/democracy](https://ourworldindata.org/democracy)
 
-What regimes are all the country in 2016? The csv is in our folder: [https://drive.google.com/file/d/11IILbAYnCZ7fYcCaoxHvNv7stDxoa9FS/view?usp=sharing](https://drive.google.com/file/d/11IILbAYnCZ7fYcCaoxHvNv7stDxoa9FS/view?usp=sharing)
+What regimes are all the country in 2015? The csv is in our folder: (expired, need to be updated)
 
-Polity IV Individual Country Regime Trends, 1946-2013: [http://www.systemicpeace.org/polity/polity4.htm](http://www.systemicpeace.org/polity/polity4.htm)
-
-Polity Data Archive (Outdated?): 
-
-[http://www.ksgleditsch.com/polity.html](http://www.ksgleditsch.com/polity.html)
 
 Democracy Index (quite authoritative): 
 
@@ -166,9 +164,6 @@ Oxford COVID Gov Response Tracker Official:
 
 Government Stringency Index (in our folder): [https://drive.google.com/file/d/14_8riS1fCSDN54FFOP226rHaSNnflZl_/view?usp=sharing](https://drive.google.com/file/d/14_8riS1fCSDN54FFOP226rHaSNnflZl_/view?usp=sharing)
 
-Risk of Openness Github project:
-
-[https://github.com/OxCGRT/covid-policy-scratchpad/tree/master/risk_of_openness_index](https://github.com/OxCGRT/covid-policy-scratchpad/tree/master/risk_of_openness_index)
 
 The COVID19 Government Measures Dataset puts together all the measures implemented by governments worldwide in response to the Coronavirus pandemic. Data collection includes secondary data review. The researched information available falls into five categories:
 

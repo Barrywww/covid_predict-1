@@ -2,7 +2,7 @@
 
 
 
-*   Preliminarily narrowed down the choices for datasets. ([the complete Our World in Data COVID-19 dataset](https://github.com/owid/covid-19-data/tree/master/public/data), Apple Mobility Data, [Oxford Government Response Tracker](www.github.com/#), Datahub: Novel Corona Virus 2019).
+*   Preliminarily narrowed down the choices for datasets. ([the complete Our World in Data COVID-19 dataset](https://github.com/owid/covid-19-data/tree/master/public/data), Apple Mobility Data, [Oxford Government Response Tracker](https://github.com/OxCGRT/covid-policy-tracker), Datahub: Novel Corona Virus 2019).
     #### Update 12/1: We decided to drop Apple Mobility Data due to its sparsity compared to other datasets. We also droped datahub because the comprehensiveness of the OWID datset.
 *   Finished analyzing and preprocessing of Apple Mobility Data
     *   Fill in the null data with feasible data
@@ -53,7 +53,32 @@
       19. tests_per_case
       20. positive_rate
       21. Stringency_index
-
+    
+    #### Time Series_Oxford
+    Check detailed codebook [here:](https://github.com/OxCGRT/covid-policy-tracker/blob/master/documentation/codebook.md)
+       1. C1_School closing
+       2. C2_Workplace closing
+       3. C3_Cancel public events
+       4. C4_Restrictions on gatherings
+       5. C5_Close public transport       
+       6. C6_Stay at home requirements
+       7. C7_Restrictions on internal movement
+       8. C8_International travel controls 
+       9. E1_Income support
+       10. E2_Debt contract relief
+       11. E3_Fiscal measures
+       12. E4_International support
+       13. H1_Public information campaigns
+       14. H2_Testing policy
+       15. H3_Contact tracing
+       16. H4_Emergency investment in healthcare
+       16. H5_Investment in vaccines
+       17. H6_Facial Coverings 
+       18. ConfirmedCases 
+       19. ConfirmedDeaths
+       20. StringencyIndex
+       21. GovernmentResponseIndex
+       22. ContainmentHealthIndex
 
 # Data Stylesheet
 

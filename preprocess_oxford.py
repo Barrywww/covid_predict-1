@@ -1,7 +1,5 @@
 import numpy as np
 import pandas as pd
-
-
 def output_csv_file(df, col, template, output_dir="./preprocessed_data/"):
     this = template.copy()
     for index, row in df.iterrows():
@@ -9,7 +7,8 @@ def output_csv_file(df, col, template, output_dir="./preprocessed_data/"):
     this.to_csv(output_dir + col.replace(" ", "_") + ".csv")
 
 
-oxford_data = pd.read_csv("./raw_data/OxCGRT_latest.txt", dtype=str)
+oxford_data = pd.read_csv("./data/OxCGRT_latest.csv", dtype=str)
+oxford_data = oxford_data[oxford_data["Jurisdiction"] == "NAT_TOTAL"]
 
 # a separate index value dataframe
 oxford_indices = oxford_data[["CountryName", "CountryCode", "Date",

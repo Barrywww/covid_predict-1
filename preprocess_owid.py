@@ -51,7 +51,7 @@ def _generate_owid_csv(col_name):
 
 def generate_owid_csv():
     for col in ['total_cases', 'new_cases', 'total_deaths', 'new_deaths', 'total_cases_per_million', 'new_cases_per_million', 'total_deaths_per_million', 'new_deaths_per_million', 'total_tests', 'new_tests', 'positive_rate', 'stringency_index']:
-        generate_owid_csv(col)
+        _generate_owid_csv(col)
 
 
 # generate_owid_csv()

@@ -16,24 +16,24 @@ template = pd.DataFrame(index=iso, columns=date)
 
 def generate_constant_data():
     # get the cosntant values using the mean of all the country data
-    constant_values = df.groupby(['iso_code']).mean().drop(columns=['total_cases', 'new_cases', 'new_cases_smoothed', 'total_deaths', 'new_deaths', 'new_deaths_smoothed', 'total_cases_per_million', 'new_cases_per_million', 'new_cases_smoothed_per_million', 'total_deaths_per_million',
-                                                                    'new_deaths_per_million', 'new_deaths_smoothed_per_million', 'total_tests', 'new_tests', 'total_tests_per_thousand', 'new_tests_per_thousand', 'new_tests_smoothed', 'new_tests_smoothed_per_thousand', 'tests_per_case', 'positive_rate'])
-    for col in constant_values:
-        if constant_values[col].count() < 150:
-            constant_values = constant_values.drop(columns=[col])
-    regime = _integrate_regime_data()
-    constant_values = pd.concat(
-        [regime, constant_values], axis=1, join="outer")
-    constant_values.sort_index(inplace=True)
-    constant_values.to_csv("preprocessed_data/constant_values.csv")
+    grouped = df.groupby(['iso_code']).mean().drop(columns=['total_cases', 'new_cases', 'new_cases_smoothed', 'total_deaths', 'new_deaths', 'new_deaths_smoothed', 'total_cases_per_million', 'new_cases_per_million', 'new_cases_smoothed_per_million', 'total_deaths_per_million',
+                                                            'new_deaths_per_million', 'new_deaths_smoothed_per_million', 'total_tests', 'new_tests', 'total_tests_per_thousand', 'new_tests_per_thousand', 'new_tests_smoothed', 'new_tests_smoothed_per_thousand', 'tests_per_case', 'positive_rate', 'stringency_index'])
+    for col in grouped:
+        if grouped[col].count() < 150:
+            grouped = grouped.drop(columns=[col])
+    # regime = _integrate_regime_data()
+    grouped = pd.concat(
+        [regime, grouped], axis=1, join="outer")
+    grouped.sort_index(inplace=True)
+    grouped.to_csv("preprocessed_data/constant_values.csv")
 
 
-def _integrate_regime_data():
-    political_regime = pd.read_csv('data/political-regime-updated2016.csv')
-    regime2015 = political_regime[political_regime['Year'] == 2015]
-    regime2015 = regime2015.set_index('iso_code')
-    regime2015 = regime2015.drop(columns=['Entity', 'Year'])
-    return regime2015
+# def _integrate_regime_data():
+#     political_regime = pd.read_csv('data/political-regime-updated2016.csv')
+#     regime2015 = political_regime[political_regime['Year'] == 2015]
+#     regime2015 = regime2015.set_index('iso_code')
+#     regime2015 = regime2015.drop(columns=['Entity', 'Year'])
+#     return regime2015
 
 
 # for every feature, use this function to throw the values into the template
@@ -50,7 +50,8 @@ def _generate_owid_csv(col_name):
 
 
 def generate_owid_csv():
-    for col in ['total_cases', 'new_cases', 'total_deaths', 'new_deaths', 'total_cases_per_million', 'new_cases_per_million', 'total_deaths_per_million', 'new_deaths_per_million', 'total_tests', 'new_tests', 'positive_rate', 'stringency_index']:
+    for col in ['total_cases', 'new_cases', 'new_cases_smoothed', 'total_deaths', 'new_deaths', 'new_deaths_smoothed', 'total_cases_per_million', 'new_cases_per_million', 'new_cases_smoothed_per_million', 'total_deaths_per_million',
+                'new_deaths_per_million', 'new_deaths_smoothed_per_million', 'total_tests', 'new_tests', 'total_tests_per_thousand', 'new_tests_per_thousand', 'new_tests_smoothed', 'new_tests_smoothed_per_thousand', 'tests_per_case', 'positive_rate', 'stringency_index']:
         _generate_owid_csv(col)
 
 

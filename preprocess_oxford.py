@@ -14,7 +14,7 @@ oxford_data = oxford_data[oxford_data["Jurisdiction"] == "NAT_TOTAL"]
 
 # a separate index value dataframe
 oxford_indices = oxford_data[["CountryName", "CountryCode", "Date",
-                              "StringencyIndex", "StringencyLegacyIndex", "GovernmentResponseIndex",
+                              "StringencyIndex", "GovernmentResponseIndex",
                               "ContainmentHealthIndex"]].copy()
 
 # drop irrelevant features

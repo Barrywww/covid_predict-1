@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+
+
 def output_csv_file(df, col, template, output_dir="./preprocessed_data/"):
     this = template.copy()
     for index, row in df.iterrows():
@@ -28,15 +30,18 @@ oxford_data.drop(["RegionName", "RegionCode", "Jurisdiction", 'StringencyIndex',
 # avoid directory error
 # handle column name: E2_Debt/contract relief -> E2_Debt contract relief
 oxford_columns = list(oxford_data.columns)
-oxford_data.columns = oxford_columns[0:12] + [oxford_columns[12].replace("/", " ")] + oxford_columns[13:]
+oxford_data.columns = oxford_columns[0:12] + \
+    [oxford_columns[12].replace("/", " ")] + oxford_columns[13:]
 
 # fill empty ConfirmedCases and ConfirmedDeaths with 0
-oxford_data["ConfirmedCases"] = oxford_data["ConfirmedCases"].fillna(0);
-oxford_data["ConfirmedDeaths"] = oxford_data["ConfirmedDeaths"].fillna(0);
+oxford_data["ConfirmedCases"] = oxford_data["ConfirmedCases"].fillna(0)
+oxford_data["ConfirmedDeaths"] = oxford_data["ConfirmedDeaths"].fillna(0)
 
 # match the format of date: from YYYYMMDD to YYYY-MM-DD
-oxford_data["Date"] = oxford_data["Date"].apply(lambda x: x[0:4] + "-" + x[4:6] + "-" + x[6:])
-oxford_indices["Date"] = oxford_indices["Date"].apply(lambda x: x[0:4] + "-" + x[4:6] + "-" + x[6:])
+oxford_data["Date"] = oxford_data["Date"].apply(
+    lambda x: x[0:4] + "-" + x[4:6] + "-" + x[6:])
+oxford_indices["Date"] = oxford_indices["Date"].apply(
+    lambda x: x[0:4] + "-" + x[4:6] + "-" + x[6:])
 
 # set the datatype of numerical values as float
 for col in oxford_data.columns[3:]:
@@ -55,4 +60,3 @@ for col in oxford_data.columns[3:]:
 
 for col in oxford_indices.columns[3:]:
     output_csv_file(oxford_indices, col, template, "./preprocessed_data/I_")
-

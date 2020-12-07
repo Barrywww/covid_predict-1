@@ -1,4 +1,8 @@
-
+.idea
+.ipynb_checkpoints
+local_test
 .DS_Store
 preprocessed_data
 data/.DS_Store
+preprocessed_data_Barry
+preprocessed_data_Tya

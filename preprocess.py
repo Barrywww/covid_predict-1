@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 variable_list = ['total_cases', 'new_cases', 'new_cases_smoothed', 'total_deaths', 'new_deaths', 'new_deaths_smoothed', 'total_cases_per_million', 'new_cases_per_million', 'new_cases_smoothed_per_million','total_deaths_per_million', 'new_deaths_per_million', 'new_deaths_smoothed_per_million', 'total_tests', 'new_tests', 'total_tests_per_thousand', 'new_tests_per_thousand', 'new_tests_smoothed', 'new_tests_smoothed_per_thousand', 'tests_per_case', 'positive_rate']
 
@@ -33,11 +34,22 @@ def prepare_data():
     return owid_data, oxf_data, owid_constant_features, owid_variables
 
 
-def generate_country_list():
-    iso = (pd.unique(owid_data['iso_code'].dropna())).tolist()
+def generate_country_list(df):
+    iso = (pd.unique(df['iso_code'].dropna())).tolist()
     iso = [code for code in iso if code[:4] != 'OWID']
     return iso
 
 
 def generate_date_series():
     return pd.Series(pd.date_range('2020', freq='D', periods=275))
+
+
+def generate_country_csv():
+    owid_data, oxf_data, owid_constant_features, owid_variables = prepare_data()
+    world_data = pd.merge(owid_data, oxf_data, how='outer').set_index('date')
+
+    for country in tqdm(generate_country_list(owid_data)):
+        this_df = world_data[world_data["iso_code"] == country].drop(columns=['iso_code']).sort_values(by=['date'])
+        this_df.to_csv("./country_csv/" + country + ".csv")
+
+generate_country_csv()

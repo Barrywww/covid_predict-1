@@ -7,3 +7,4 @@ data/.DS_Store
 preprocessed_data_Barry
 preprocessed_data_Tya
 .vscode
+__pycache__

@@ -9,7 +9,7 @@ def prepare_data():
     owid_data = pd.read_csv("./data/owid-covid-data.csv", dtype=str).drop(columns=['continent', 'location', 'stringency_index', 'tests_units'])
     oxf_data = pd.read_csv("./data/OxCGRT_latest.csv", dtype=str)
     oxf_data = oxf_data[oxf_data["Jurisdiction"] == "NAT_TOTAL"]
-    oxf_data.drop(columns=['CountryName', 'RegionName', 'RegionCode','Jurisdiction', 'M1_Wildcard', 'ConfirmedCases', 'ConfirmedDeaths'], inplace=True)
+    oxf_data.drop(columns=['CountryName', 'RegionName', 'RegionCode', 'Jurisdiction', 'M1_Wildcard', 'ConfirmedCases', 'ConfirmedDeaths'], inplace=True)
     oxf_data.rename(columns={'E2_Debt/contract relief': 'E2_Debt contract relief', 'Date': 'date', 'CountryCode': 'iso_code'}, inplace=True)
     cols = [c for c in oxf_data.columns if c.lower(
     )[-4:] != 'flag' and c.lower()[-7:] != 'display']
@@ -31,13 +31,16 @@ def prepare_data():
 
     owid_variables = owid_data.loc[:, variable_list]
 
+    oxf_data = oxf_data[oxf_data["date"] >= pd.Timestamp(2020, 1, 23)]
+
     return owid_data, oxf_data, owid_constant_features, owid_variables
 
 
-def generate_country_list(df):
-    iso = (pd.unique(df['iso_code'].dropna())).tolist()
-    iso = [code for code in iso if code[:4] != 'OWID']
-    return iso
+def generate_country_list(df1, df2):
+    # iso = (pd.unique(df['iso_code'].dropna())).tolist()
+    # iso = [code for code in iso if code[:4] != 'OWID']
+    # return iso
+    return sorted(list(set(df1).intersection(set(df2))))
 
 
 def generate_date_series():
@@ -46,10 +49,14 @@ def generate_date_series():
 
 def generate_country_csv():
     owid_data, oxf_data, owid_constant_features, owid_variables = prepare_data()
+    country_list = generate_country_list(owid_data["iso_code"], oxf_data["iso_code"])
+    owid_data = owid_data[owid_data["iso_code"].isin(country_list)].copy()
+    oxf_data = oxf_data[oxf_data["iso_code"].isin(country_list)].copy()
     world_data = pd.merge(owid_data, oxf_data, how='outer').set_index('date')
 
-    for country in tqdm(generate_country_list(owid_data)):
+    for country in tqdm(country_list):
         this_df = world_data[world_data["iso_code"] == country].drop(columns=['iso_code']).sort_values(by=['date'])
         this_df.to_csv("./country_csv/" + country + ".csv")
+
 
 generate_country_csv()

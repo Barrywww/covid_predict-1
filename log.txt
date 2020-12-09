@@ -1,0 +1,67 @@
+2020-12-10 00:00:00
+------------------------------------------- model -------------------------------------------
+LSTM(
+  (lstm): LSTM(42, 50)
+  (linear): Linear(in_features=50, out_features=1, bias=True)
+)
+------------------------------------------- train -------------------------------------------
+epoch:  0 loss: 0.83215046
+epoch:  1 loss: 0.71323806
+epoch:  2 loss: 0.61022329
+epoch:  3 loss: 0.51850468
+epoch:  4 loss: 0.43608952
+epoch:  5 loss: 0.36187634
+epoch:  6 loss: 0.29519963
+epoch:  7 loss: 0.23562436
+epoch:  8 loss: 0.18287125
+epoch:  9 loss: 0.13681976
+epoch: 10 loss: 0.09753100
+epoch: 11 loss: 0.06525612
+epoch: 12 loss: 0.04042419
+epoch: 13 loss: 0.02361415
+epoch: 14 loss: 0.01550692
+epoch: 15 loss: 0.01680651
+epoch: 16 loss: 0.02811161
+epoch: 17 loss: 0.04970252
+epoch: 18 loss: 0.08118482
+epoch: 19 loss: 0.12094596
+epoch: 20 loss: 0.16570318
+epoch: 21 loss: 0.21081798
+epoch: 22 loss: 0.25143245
+epoch: 23 loss: 0.28368327
+epoch: 24 loss: 0.30534977
+epoch: 25 loss: 0.31582195
+epoch: 26 loss: 0.31568328
+epoch: 27 loss: 0.30625260
+epoch: 28 loss: 0.28923419
+epoch: 29 loss: 0.26647785
+epoch: 30 loss: 0.23981325
+epoch: 31 loss: 0.21093664
+epoch: 32 loss: 0.18133889
+epoch: 33 loss: 0.15227087
+epoch: 34 loss: 0.12473462
+epoch: 35 loss: 0.09949467
+epoch: 36 loss: 0.07710066
+epoch: 37 loss: 0.05791534
+epoch: 38 loss: 0.04214391
+epoch: 39 loss: 0.02986277
+epoch: 40 loss: 0.02104565
+epoch: 41 loss: 0.01558666
+epoch: 42 loss: 0.01332016
+epoch: 43 loss: 0.01403718
+epoch: 44 loss: 0.01749890
+epoch: 45 loss: 0.02344722
+epoch: 46 loss: 0.03161270
+epoch: 47 loss: 0.04172035
+epoch: 48 loss: 0.05349325
+epoch: 49 loss: 0.06665470
+epoch: 50 loss: 0.08092906
+epoch: 51 loss: 0.09604261
+epoch: 52 loss: 0.11172572
+epoch: 53 loss: 0.12771772
+epoch: 54 loss: 0.14377378
+epoch: 55 loss: 0.15967135
+epoch: 56 loss: 0.17521393
+epoch: 57 loss: 0.19023250
+epoch: 58 loss: 0.20458503
+epoch: 59 loss: 0.21815540

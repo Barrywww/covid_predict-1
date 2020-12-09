@@ -5,15 +5,22 @@ from preprocess import *
 import torch
 import torch.nn as nn
 
-owid_data, oxf_data, owid_constant_features, owid_variables = prepare_data()
-countries = generate_country_list(owid_data['iso_code'], oxf_data['iso_code'])
+def generate_data_label():
+    owid_data, oxf_data, owid_constant_features, owid_variables = prepare_data()
+    countries = generate_country_list(owid_data['iso_code'], oxf_data['iso_code'])
 
-X_train = pd.concat([pd.read_csv("./country_csv/train/" + country + "_train.csv").fillna(0) for country in countries]).drop(columns=['date'])
+    X_train = pd.concat([pd.read_csv("./country_csv/train/" + country + "_train.csv").fillna(0) for country in countries]).drop(columns=['date'])
 
-scaler = MinMaxScaler(feature_range=(-1, 1))
-X_train = scaler.fit_transform(X_train)
-y_train = X_train[:, 0]
-X_train = X_train[:, 1:]
+    scaler = MinMaxScaler(feature_range=(-1, 1))
+    X_train = scaler.fit_transform(X_train)
+    y_train = X_train[:, 0]
+    X_train = X_train[:, 1:]
+
+    X_test = pd.concat([pd.read_csv("./country_csv/test/" + country + "_test.csv").fillna(0) for country in countries]).drop(columns=['date'])
+    X_test = scaler.transform(X_test)
+    y_test = X_test[:, 0]
+    X_test = X_test[:, 1:]
+    return X_train, y_train, X_test, y_test
 
 
 def make_sequences(x, y, seq_length):
@@ -24,8 +31,8 @@ def make_sequences(x, y, seq_length):
         sequences.append(x[i: i + seq_length])
         labels.append([y[i + seq_length]])
 
-    print('----------------------------------------- sequences -----------------------------------------')
-    print(np.array(sequences).shape, np.array(labels).shape)
+    # print('----------------------------------------- sequences -----------------------------------------')
+    # print(np.array(sequences).shape, np.array(labels).shape)
 
     return np.array(sequences), np.array(labels)
 
@@ -57,25 +64,43 @@ class LSTM(nn.Module):
         return y_pred
 
 
-def train_model(model, train_data, train_labels):
+def train_model(model, train_data, train_labels, test_data, test_labels):
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     num_epochs = 60
+
+    train_hist = np.zeros(num_epochs)
+    test_hist = np.zeros(num_epochs)
+
     for e in range(num_epochs):
         model.reset_hidden_state()
         y_pred = model(train_data)
         loss = loss_fn(y_pred, train_labels)
+        train_hist[e] = loss.item()
+
+        with torch.no_grad():
+            y_test_pred = model(test_data)
+            test_loss = loss_fn(y_test_pred, test_labels)
+        test_hist[e] = test_loss.item()
+
         loss.backward()
         optimizer.step()
-        print(f'epoch: {e:2} loss: {loss.item():10.8f}')
+        print(f'epoch: {e:2}; train loss: {loss.item():10.8f}; test loss: {test_loss.item():10.8f};')
+    return model.eval(), train_hist, test_hist
 
 
-model = LSTM(42, 100, 7, 1)
+X_train, y_train, X_test, y_test = generate_data_label()
+
 sequences, labels = make_sequences(X_train, y_train, 7)
+test_sequences, test_labels = make_sequences(X_test, y_test, 7)
 sequences = torch.from_numpy(sequences).float()
 labels = torch.from_numpy(labels).float()
+test_sequences = torch.from_numpy(test_sequences).float()
+test_labels = torch.from_numpy(test_labels).float()
+
+model = LSTM(42, 100, 7, 1)
 print('------------------------------------------- model -------------------------------------------')
 print(model)
 
 print('------------------------------------------- train -------------------------------------------')
-train_model(model, sequences, labels)
+train_model(model, sequences, labels, test_sequences, test_labels)

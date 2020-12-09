@@ -16,6 +16,7 @@ def prepare_data():
     cols = [c for c in oxf_data.columns if c.lower()[-4:] != 'flag' and c.lower()[-7:] != 'display']
     oxf_data = oxf_data[cols]
 
+
     # Setting datatype
     for df in [owid_data, oxf_data]:
         df['date'] = pd.to_datetime(df['date'])

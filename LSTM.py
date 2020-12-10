@@ -4,6 +4,7 @@ import pandas as pd
 from preprocess import *
 import torch
 import torch.nn as nn
+import matplotlib.pyplot as plt
 
 def generate_data_label():
     owid_data, oxf_data, owid_constant_features, owid_variables = prepare_data()
@@ -98,9 +99,15 @@ labels = torch.from_numpy(labels).float()
 test_sequences = torch.from_numpy(test_sequences).float()
 test_labels = torch.from_numpy(test_labels).float()
 
-model = LSTM(42, 100, 7, 1)
+model = LSTM(42, 500, 7, 1)
 print('------------------------------------------- model -------------------------------------------')
 print(model)
 
 print('------------------------------------------- train -------------------------------------------')
-train_model(model, sequences, labels, test_sequences, test_labels)
+trained_model, train_losses, test_losses = train_model(model, sequences, labels, test_sequences, test_labels)
+
+plt.plot(range(epochs), train_losses, label='train loss')
+plt.plot(range(epochs), test_losses, label='test loss')
+plt.ylabel('Loss')
+plt.xlabel('epoch')
+plt.show()

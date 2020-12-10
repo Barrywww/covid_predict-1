@@ -65,10 +65,9 @@ class LSTM(nn.Module):
         return y_pred
 
 
-def train_model(model, train_data, train_labels, test_data, test_labels):
+def train_model(model, train_data, train_labels, test_data, test_labels, num_epochs):
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-    num_epochs = 60
 
     train_hist = np.zeros(num_epochs)
     test_hist = np.zeros(num_epochs)
@@ -104,7 +103,7 @@ print('------------------------------------------- model -----------------------
 print(model)
 
 print('------------------------------------------- train -------------------------------------------')
-trained_model, train_losses, test_losses = train_model(model, sequences, labels, test_sequences, test_labels)
+trained_model, train_losses, test_losses = train_model(model, sequences, labels, test_sequences, test_labels, 100)
 
 plt.plot(range(epochs), train_losses, label='train loss')
 plt.plot(range(epochs), test_losses, label='test loss')

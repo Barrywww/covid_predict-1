@@ -68,9 +68,27 @@ class LSTM(nn.Module):
         return y_pred
 
 
+def unscale(X_scaled, target, scaler):
+    """
+    scaled_X: ndarray
+    scaled_y: torch Tensor
+    """
+    if type(target) == torch.Tensor:
+        y_scaled = torch.clone(target).detach().numpy()
+    else:
+        y_scaled = target.copy().reshape(-1, 1)
+
+    scaled_data = np.concatenate((X_scaled, y_scaled), axis=1)
+    unscaled_data = scaler.inverse_transform(scaled_data)
+    return torch.from_numpy(unscaled_data[:, -1])
+
+
 def train_model(model, train_data, train_labels, test_data, test_labels, scaler, num_epochs):
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+    y_train_unscaled = make_sequences(X_train, unscale(X_train, y_train, scaler), 7)[1].view(-1)
+    y_test_unscaled = make_sequences(X_test, unscale(X_test, y_test, scaler), 7)[1].view(-1)
 
     train_hist = np.zeros(num_epochs)
     test_hist = np.zeros(num_epochs)
@@ -80,16 +98,20 @@ def train_model(model, train_data, train_labels, test_data, test_labels, scaler,
 
         y_pred = model(train_data)
         loss = loss_fn(y_pred, train_labels)
-        train_hist[e] = loss.item()
 
         with torch.no_grad():
             y_test_pred = model(test_data)
-            test_loss = loss_fn(y_test_pred, test_labels)
+            y_test_pred_unscaled = unscale(X_test[8:], y_test_pred, scaler)
+            test_loss = loss_fn(y_test_pred_unscaled, y_test_unscaled)
+
+            y_pred_unscaled = unscale(X_train[8:], y_pred, scaler)
+            unscaled_loss = loss_fn(y_pred_unscaled, y_train_unscaled)
+        train_hist[e] = unscaled_loss.item()
         test_hist[e] = test_loss.item()
 
         loss.backward()
         optimizer.step()
-        print(f'epoch: {e:2}; train loss: {loss.item():10.8f}; test loss: {test_loss.item():10.8f};')
+        print(f'epoch: {e:2}; train loss: {unscaled_loss.item():10.8f}; test loss: {test_loss.item():10.8f};')
     return model.eval(), train_hist, test_hist
 
 

@@ -18,10 +18,11 @@ def generate_data_label():
     X_train = X_train[:, 1:]
 
     X_test = pd.concat([pd.read_csv("./country_csv/test/" + country + "_test.csv").fillna(0) for country in countries]).drop(columns=['date'])
+    # y_test = np.array(X_test['new_cases'])
     X_test = scaler.transform(X_test)
     y_test = X_test[:, 0]
     X_test = X_test[:, 1:]
-    return X_train, y_train, X_test, y_test
+    return X_train, y_train, X_test, y_test, scaler
 
 
 def make_sequences(x, y, seq_length):
@@ -35,7 +36,9 @@ def make_sequences(x, y, seq_length):
     # print('----------------------------------------- sequences -----------------------------------------')
     # print(np.array(sequences).shape, np.array(labels).shape)
 
-    return np.array(sequences), np.array(labels)
+    sequences = torch.from_numpy(np.array(sequences)).float()
+    labels = torch.from_numpy(np.array(labels)).float()
+    return sequences, labels
 
 
 class LSTM(nn.Module):
@@ -65,7 +68,7 @@ class LSTM(nn.Module):
         return y_pred
 
 
-def train_model(model, train_data, train_labels, test_data, test_labels, num_epochs):
+def train_model(model, train_data, train_labels, test_data, test_labels, scaler, num_epochs):
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
@@ -74,6 +77,7 @@ def train_model(model, train_data, train_labels, test_data, test_labels, num_epo
 
     for e in range(num_epochs):
         model.reset_hidden_state()
+
         y_pred = model(train_data)
         loss = loss_fn(y_pred, train_labels)
         train_hist[e] = loss.item()
@@ -89,24 +93,21 @@ def train_model(model, train_data, train_labels, test_data, test_labels, num_epo
     return model.eval(), train_hist, test_hist
 
 
-X_train, y_train, X_test, y_test = generate_data_label()
+X_train, y_train, X_test, y_test, scaler = generate_data_label()
 
 sequences, labels = make_sequences(X_train, y_train, 7)
 test_sequences, test_labels = make_sequences(X_test, y_test, 7)
-sequences = torch.from_numpy(sequences).float()
-labels = torch.from_numpy(labels).float()
-test_sequences = torch.from_numpy(test_sequences).float()
-test_labels = torch.from_numpy(test_labels).float()
 
-model = LSTM(42, 500, 7, 1)
+model = LSTM(sequences.shape[2], 50, 7, 1)
+num_epochs = 100
 print('------------------------------------------- model -------------------------------------------')
 print(model)
 
 print('------------------------------------------- train -------------------------------------------')
-trained_model, train_losses, test_losses = train_model(model, sequences, labels, test_sequences, test_labels, 100)
+trained_model, train_losses, test_losses = train_model(model, sequences, labels, test_sequences, test_labels, scaler, num_epochs)
 
-plt.plot(range(epochs), train_losses, label='train loss')
-plt.plot(range(epochs), test_losses, label='test loss')
+plt.plot(range(num_epochs), train_losses, label='train loss')
+plt.plot(range(num_epochs), test_losses, label='test loss')
 plt.ylabel('Loss')
 plt.xlabel('epoch')
 plt.show()

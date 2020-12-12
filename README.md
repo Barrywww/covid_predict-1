@@ -14,9 +14,12 @@ Before training the model you'll need to run the preprocess module. Create a fil
      --preprocess.py
 ```
 And then you'll be able to run `preprocess.py`. After running it, you'll find all csv that's priliminary to trianing the model in these two folders.
+Please run to_supervised.ipynb sequencially thereafter.
 
 ## Models
+`linear_regression_test.ipynb` is the test for linear regression
 `LSTM.py` is a not successful attempt of ours. It yields unaccurate predictive results despite its smooth error figure:
+`LSTM_finalized.ipynb` is the final model of ours. Please sequencially run preprocess.py and to_supervised.ipynb first
 
 ![Image of LSTM](https://i.imgur.com/FDqCtae.png)
 

@@ -1,3 +1,28 @@
+# Usage
+
+## Preprocessing
+Before training the model you'll need to run the preprocess module. Create a file structure as below:
+```
+    \project root
+     |
+     --\country_csv
+        |
+        --\test
+        |
+        --\train
+     |
+     --preprocess.py
+```
+And then you'll be able to run `preprocess.py`. After running it, you'll find all csv that's priliminary to trianing the model in these two folders.
+
+## Models
+`LSTM.py` is a not successful attempt of ours. It yields unaccurate predictive results despite its smooth error figure:
+
+![Image of LSTM]
+(https://i.imgur.com/FDqCtae.png)
+
+
+
 # Checklist
 
 

@@ -69,18 +69,15 @@ class LSTM(nn.Module):
 
 
 def unscale(X_scaled, target, scaler):
-    """
-    scaled_X: ndarray
-    scaled_y: torch Tensor
-    """
+
     if type(target) == torch.Tensor:
         y_scaled = torch.clone(target).detach().numpy()
     else:
         y_scaled = target.copy().reshape(-1, 1)
 
-    scaled_data = np.concatenate((X_scaled, y_scaled), axis=1)
+    scaled_data = np.concatenate((y_scaled, X_scaled), axis=1)
     unscaled_data = scaler.inverse_transform(scaled_data)
-    return torch.from_numpy(unscaled_data[:, -1])
+    return torch.from_numpy(unscaled_data[:, 0])
 
 
 def train_model(model, train_data, train_labels, test_data, test_labels, scaler, num_epochs=1000, learning_rate=1e-06):

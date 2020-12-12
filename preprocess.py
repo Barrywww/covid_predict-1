@@ -58,12 +58,12 @@ def generate_country_csv():
     world_data = pd.merge(owid_data, oxf_data, how='inner').set_index('date')
     for country in tqdm(country_list):
         this_df = world_data[world_data["iso_code"] == country].drop(columns=['iso_code']).sort_values(by=['date'])
-        # this_train = this_df.iloc[: 201]
-        # this_val = this_df.iloc[201:252]
-        # this_test = this_df.iloc[252:]
-        # this_train.to_csv("./country_csv/train/" + country + "_train.csv")
-        # this_val.to_csv("./country_csv/validation/" + country + "_val.csv")
-        # this_test.to_csv("./country_csv/test/" + country + "_test.csv")
+        this_train = this_df.iloc[: 201]
+        this_val = this_df.iloc[201:252]
+        this_test = this_df.iloc[252:]
+        this_train.to_csv("./country_csv/train/" + country + "_train.csv")
+        this_val.to_csv("./country_csv/validation/" + country + "_val.csv")
+        this_test.to_csv("./country_csv/test/" + country + "_test.csv")
         this_df.to_csv("./country_csv/" + country + ".csv")
 
 if __name__ == '__main__':

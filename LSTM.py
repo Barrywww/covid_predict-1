@@ -125,7 +125,7 @@ print('------------------------------------------- model -----------------------
 print(model)
 
 print('------------------------------------------- train -------------------------------------------')
-trained_model, train_losses, test_losses = train_model(model, sequences, labels, test_sequences, test_labels, scaler, num_epochs=100)
+trained_model, train_losses, test_losses = train_model(model, sequences, labels, test_sequences, test_labels, scaler, num_epochs=500)
 
 plt.plot(range(num_epochs), train_losses, label='train loss')
 plt.plot(range(num_epochs), test_losses, label='test loss')

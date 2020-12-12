@@ -18,9 +18,9 @@ And then you'll be able to run `preprocess.py`. After running it, you'll find al
 ## Models
 `LSTM.py` is a not successful attempt of ours. It yields unaccurate predictive results despite its smooth error figure:
 
-![Image of LSTM]
-(https://i.imgur.com/FDqCtae.png)
+![Image of LSTM](https://i.imgur.com/FDqCtae.png)
 
+If you want to see the results of this model, you can run this model and it will show the figures of train losses and test losses. To see the actual predicted cases instead of scaled numbers, set `print_scale=True`.
 
 
 # Checklist

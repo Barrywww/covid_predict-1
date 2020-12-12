@@ -80,7 +80,7 @@ def unscale(X_scaled, target, scaler):
     return torch.from_numpy(unscaled_data[:, 0])
 
 
-def train_model(model, train_data, train_labels, test_data, test_labels, scaler, num_epochs=1000, learning_rate=1e-06):
+def train_model(model, train_data, train_labels, test_data, test_labels, scaler, num_epochs=1000, learning_rate=1e-06, print_unscale=False):
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
@@ -98,21 +98,31 @@ def train_model(model, train_data, train_labels, test_data, test_labels, scaler,
 
         with torch.no_grad():
             y_test_pred = model(test_data)
+            test_loss = loss_fn(y_test_pred, test_labels)
             y_test_pred_unscaled = unscale(X_test[:X_test.shape[0] - 8], y_test_pred, scaler)
-            test_loss = loss_fn(y_test_pred_unscaled, y_test_unscaled)
+            test_loss_unscaled = loss_fn(y_test_pred_unscaled, y_test_unscaled)
 
             y_pred_unscaled = unscale(X_train[:X_train.shape[0] - 8], y_pred, scaler)
             unscaled_loss = loss_fn(y_pred_unscaled, y_train_unscaled)
-        train_hist[e] = unscaled_loss.item()
-        test_hist[e] = test_loss.item()
+        if print_unscale:
+            print(f'epoch: {e:2}; train loss: {unscaled_loss.item():10.8f}; test loss: {test_loss_unscaled.item():10.8f};')
+            train_hist[e] = unscaled_loss.item()
+            test_hist[e] = test_loss_unscaled.item()
+        else:
+            print(f'epoch: {e:2}; train loss: {loss.item():10.8f}; test loss: {test_loss.item():10.8f};')
+            train_hist[e] = loss.item()
+            test_hist[e] = test_loss.item()
 
         loss.backward()
         optimizer.step()
-        print(f'epoch: {e:2}; train loss: {unscaled_loss.item():10.8f}; test loss: {test_loss.item():10.8f};')
+        
     with torch.no_grad():
         y_test_pred = model(test_data)
         y_test_pred_unscaled = unscale(X_test[:X_test.shape[0] - 8], y_test_pred, scaler)
-    return model.eval(), train_hist, test_hist, y_test_pred_unscaled
+    if print_unscale:
+        return model.eval(), train_hist, test_hist, y_test_pred_unscaled
+    else:
+        return model.eval(), train_hist, test_hist, y_test_pred
 
 
 X_train, y_train, X_test, y_test, scaler = generate_data_label()
@@ -120,12 +130,12 @@ X_train, y_train, X_test, y_test, scaler = generate_data_label()
 sequences, labels = make_sequences(X_train, y_train, 7)
 test_sequences, test_labels = make_sequences(X_test, y_test, 7)
 
-model = LSTM(sequences.shape[2], 50, 7)
+model = LSTM(sequences.shape[2], 200, 7)
 print('------------------------------------------- model -------------------------------------------')
 print(model)
 
 print('------------------------------------------- train -------------------------------------------')
-trained_model, train_losses, test_losses, test_values = train_model(model, sequences, labels, test_sequences, test_labels, scaler, num_epochs=1)
+trained_model, train_losses, test_losses, test_values = train_model(model, sequences, labels, test_sequences, test_labels, scaler, num_epochs=500)
 
 
 # plt.plot(range(num_epochs), train_losses, label='train loss')

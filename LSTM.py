@@ -98,10 +98,10 @@ def train_model(model, train_data, train_labels, test_data, test_labels, scaler,
 
         with torch.no_grad():
             y_test_pred = model(test_data)
-            y_test_pred_unscaled = unscale(X_test[8:], y_test_pred, scaler)
+            y_test_pred_unscaled = unscale(X_test[:X_test.shape[0] - 8], y_test_pred, scaler)
             test_loss = loss_fn(y_test_pred_unscaled, y_test_unscaled)
 
-            y_pred_unscaled = unscale(X_train[8:], y_pred, scaler)
+            y_pred_unscaled = unscale(X_train[:X_train.shape[0] - 8], y_pred, scaler)
             unscaled_loss = loss_fn(y_pred_unscaled, y_train_unscaled)
         train_hist[e] = unscaled_loss.item()
         test_hist[e] = test_loss.item()
@@ -109,7 +109,10 @@ def train_model(model, train_data, train_labels, test_data, test_labels, scaler,
         loss.backward()
         optimizer.step()
         print(f'epoch: {e:2}; train loss: {unscaled_loss.item():10.8f}; test loss: {test_loss.item():10.8f};')
-    return model.eval(), train_hist, test_hist
+    with torch.no_grad():
+        y_test_pred = model(test_data)
+        y_test_pred_unscaled = unscale(X_test[:X_test.shape[0] - 8], y_test_pred, scaler)
+    return model.eval(), train_hist, test_hist, y_test_pred_unscaled
 
 
 X_train, y_train, X_test, y_test, scaler = generate_data_label()
@@ -122,10 +125,23 @@ print('------------------------------------------- model -----------------------
 print(model)
 
 print('------------------------------------------- train -------------------------------------------')
-trained_model, train_losses, test_losses = train_model(model, sequences, labels, test_sequences, test_labels, scaler, num_epochs=500)
+trained_model, train_losses, test_losses, test_values = train_model(model, sequences, labels, test_sequences, test_labels, scaler, num_epochs=1)
 
-plt.plot(range(num_epochs), train_losses, label='train loss')
-plt.plot(range(num_epochs), test_losses, label='test loss')
-plt.ylabel('Loss')
-plt.xlabel('epoch')
+
+# plt.plot(range(num_epochs), train_losses, label='train loss')
+# plt.plot(range(num_epochs), test_losses, label='test loss')
+# plt.ylabel('Loss')
+# plt.xlabel('epoch')
+# plt.show()
+y_test = list(y_test)
+test_values = list(test_values)
+for i in range(0, len(y_test), 62):
+    temp = plt.subplot(10, 20, i // 62 + 1)
+    temp.plot(y_test[i: i + 61], label='actual')
+    temp.plot(test_values[i: i + 61], label='predicted')
+    temp.set_yticklabels([])
+    temp.set_xticklabels([])
+a0 = plt.subplot(11, 1, 10)
+a0.plot(train_losses, label='train loss')
+a0.plot(test_losses, label='test loss')
 plt.show()

@@ -20,6 +20,7 @@ Please run to_supervised.ipynb sequencially thereafter.
 
 ## Models
 MAKE SURE you sequencially run preprocess.py and to_supervised.ipynb first
+
 `LSTM_finalized.ipynb` is the final model of our project. 
 
 `linear_regression_test.ipynb` is the test for linear regression

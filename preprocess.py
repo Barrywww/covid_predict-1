@@ -69,4 +69,7 @@ def generate_country_csv():
 if __name__ == '__main__':
     if not os.path.exists("./country_csv/"):
         os.mkdir("./country_csv")
+        os.mkdir("./country_csv/test")
+        os.mkdir("./country_csv/validation")
+        os.mkdir("./country_csv/train")
     generate_country_csv()

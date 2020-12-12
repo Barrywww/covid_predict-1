@@ -1,7 +1,9 @@
+import os
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
+# selected features for OWID data
 variable_list = ['new_cases', 'total_deaths', 'total_tests', 'tests_per_case', 'positive_rate']
 
 # Extracting features
@@ -39,31 +41,32 @@ def prepare_data():
     return owid_data, oxf_data, owid_constant_features, owid_variables
 
 
+# return the common iso code for two input series
 def generate_country_list(series1, series2):
-    # iso = (pd.unique(df['iso_code'].dropna())).tolist()
-    # iso = [code for code in iso if code[:4] != 'OWID']
-    # return iso
     return sorted(list(set(series1).intersection(set(series2))))
 
-
+# generate the date series
 def generate_date_series():
     return pd.Series(pd.date_range('2020', freq='D', periods=275))
 
-
+# generate the csv file of each country
 def generate_country_csv():
     owid_data, oxf_data, owid_constant_features, owid_variables = prepare_data()
     country_list = generate_country_list(owid_data["iso_code"], oxf_data["iso_code"])
     # owid_data = owid_data[owid_data["iso_code"].isin(country_list)].copy()
     # oxf_data = oxf_data[oxf_data["iso_code"].isin(country_list)].copy()
     world_data = pd.merge(owid_data, oxf_data, how='inner').set_index('date')
-
     for country in tqdm(country_list):
         this_df = world_data[world_data["iso_code"] == country].drop(columns=['iso_code']).sort_values(by=['date'])
-        this_train = this_df.iloc[: 252]
-        this_test = this_df.iloc[252:]
-        this_train.to_csv("./country_csv/train/" + country + "_train.csv")
-        this_test.to_csv("./country_csv/test/" + country + "_test.csv")
-
+        # this_train = this_df.iloc[: 201]
+        # this_val = this_df.iloc[201:252]
+        # this_test = this_df.iloc[252:]
+        # this_train.to_csv("./country_csv/train/" + country + "_train.csv")
+        # this_val.to_csv("./country_csv/validation/" + country + "_val.csv")
+        # this_test.to_csv("./country_csv/test/" + country + "_test.csv")
+        this_df.to_csv("./country_csv/" + country + ".csv")
 
 if __name__ == '__main__':
+    if not os.path.exists("./country_csv/"):
+        os.mkdir("./country_csv")
     generate_country_csv()

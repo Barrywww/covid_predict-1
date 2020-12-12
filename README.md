@@ -20,13 +20,14 @@ Please run to_supervised.ipynb sequencially thereafter.
 
 ## Models
 MAKE SURE you sequencially run preprocess.py and to_supervised.ipynb first
+`LSTM_finalized.ipynb` is the final model of our project. 
 
 `linear_regression_test.ipynb` is the test for linear regression
 
-`LSTM.py` is a not successful attempt of ours. It yields unaccurate predictive results despite its smooth error figure.
+`LSTM_test.py` is a not successful attempt of ours. It yields unaccurate predictive results despite its smooth error figure.
 If you want to see the results of this model, you can run this model and it will show the figures of train losses and test losses. To see the actual predicted cases instead of scaled numbers, set `print_scale=True`.
 
-`LSTM_finalized.ipynb` is the final model of our project. 
+
 
 For other models, please
 

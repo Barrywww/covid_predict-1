@@ -1,36 +1,19 @@
 # Usage
 
 ## Preprocessing
-Before training the model you'll need to run the preprocess module. Create a file structure as below:
-```
-    \project root
-     |
-     --\country_csv
-        |
-        --\test
-        |
-        --\train
-        |
-        --\validation
-     |
-     --preprocess.py
-```
-And then you'll be able to run `preprocess.py`. After running it, you'll find all csv that's priliminary to trianing the model in these two folders.
-Please run to_supervised.ipynb sequencially thereafter.
+1. Please run `preprocess.py` to generate the preprocessed dataset. After running it, you'll find all csv in country_csv folder that's priliminary to trianing the different models. Contributed by Tya.
+
+2. Please run to_supervised.ipynb sequencially thereafter. The timestep we used in our project is 1 day. If you are interested in getting other supervised datasets,  please change value of the `n_in` parameter in the last line of code. Countributed by Barry, modified the work of Jason Brownlee here: https://machinelearningmastery.com/convert-time-series-supervised-learning-problem-python/
 
 ## Models
-MAKE SURE you sequencially run preprocess.py and to_supervised.ipynb first
+MAKE SURE you sequencially run preprocess.py and to_supervised.ipynb first!
 
-`LSTM_finalized.ipynb` is the final model of our project. 
+`LSTM_finalized.ipynb` is the final model of our project.  The notebook is modified to train on Google Colab, if you are not using it, please DO NOT execute the blocks that are noted as `FOR GOOGLE COLAB ONLY` and execute the block that are noted as `FOR LOCALHOST`. The notebook includes two caller blocks, noted as `single country execution` and `batch execution`. If you are doing the training for one single country, please input the ISO-3 code for that country and execute. The batch execution will train a model for all the countries that are included in the `./country_csv` folder. The prediction and loss graphs will be exported to `./pred_graph` and `./loss_graph`, grouped by country ISO-3 code. Countributed by Tya & Barry.
 
-`linear_regression_test.ipynb` is the test for linear regression
+`linear_regression_test.ipynb` is the experiment for Ridge regression model. You can modify the `selected_country` varible with ISO-3 country codes to see the result of different country. Please run all the blocks sequencially. Countributed by Barry.
 
-`LSTM_test.py` is a not successful attempt of ours. It yields unaccurate predictive results despite its smooth error figure.
-If you want to see the results of this model, you can run this model and it will show the figures of train losses and test losses. To see the actual predicted cases instead of scaled numbers, set `print_scale=True`.
-
-
-
-For other models, please
+`LSTM_test.py` is also an experiment of general model across countries. It yields unaccurate predictive results despite its smooth error figure.
+If you want to see the results of this model, you can directly run this script and it will show the figures of train losses and test losses. To see the actual predicted cases instead of scaled numbers, set `print_scale=True`. Countributed by Tya.
 
 # Checklist
 
